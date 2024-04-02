@@ -7,8 +7,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: black;
-            color: white;
+            background-color: #f2f2f2; /* light gray background */
+            color: #333; /* dark gray text color */
             margin: 0;
             padding: 0;
         }
@@ -17,12 +17,12 @@
             max-width: 600px;
             margin: 50px auto;
             padding: 20px;
-            background-color: #333;
+            background-color: white; /* white container background */
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
         h1 {
-            color: red;
+            color: #ff0000; /* red title color */
             text-align: center;
         }
         form {
@@ -34,14 +34,32 @@
         }
         input[type="submit"] {
             padding: 10px 20px;
-            background-color: red;
-            color: white;
+            background-color: #ff0000; /* red button background color */
+            color: white; /* white button text color */
             border: none;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         input[type="submit"]:hover {
-            background-color: #ff6666;
+            background-color: #cc0000; /* darker red on hover */
+        }
+        /* Make images responsive */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+        /* Download link style */
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #ff0000; /* red download link color */
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -53,6 +71,19 @@
             <br>
             <input type="submit" value="Upload">
         </form>
+
+        <!-- Display image previews -->
+        {% if preview_red %}
+            <img src="{{ preview_red }}" alt="Red Image Preview">
+        {% endif %}
+        {% if preview_black %}
+            <img src="{{ preview_black }}" alt="Black Image Preview">
+        {% endif %}
+
+        <!-- Provide download link for Graphics.h -->
+        {% if graphics_h %}
+            <a href="{{ graphics_h }}" download>Download Graphics.h</a>
+        {% endif %}
     </div>
 </body>
 </html>
