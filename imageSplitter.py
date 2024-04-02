@@ -1,6 +1,6 @@
 from PIL import Image
 
-def convert_red_to_white(input_image_path, output_image_path):
+def convert_black(input_image_path, output_image_path):
     # Open the image
     img = Image.open(input_image_path)
     # Convert to RGB mode (in case it's in grayscale)
@@ -16,7 +16,7 @@ def convert_red_to_white(input_image_path, output_image_path):
     # Save the modified image
     img.save(output_image_path)
 
-def convert_black_to_white(input_image_path, output_image_path):
+def convert_red(input_image_path, output_image_path):
     # Open the image
     img = Image.open(input_image_path)
     # Convert to RGB mode (in case it's in grayscale)
@@ -32,9 +32,4 @@ def convert_black_to_white(input_image_path, output_image_path):
     # Save the modified image
     img.save(output_image_path)
 
-# Example usage:
-# Convert red pixels to white
-convert_red_to_white("/inputImage/input_image.bmp", "/splittedImage/black.bmp")
 
-# Convert black pixels to white
-convert_black_to_white("/inputImage/input_image.bmp", "/splittedImage/red.bmp")
