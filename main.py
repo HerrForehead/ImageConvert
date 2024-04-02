@@ -39,6 +39,9 @@ def upload_image():
         img = img.convert("P", palette=Image.ADAPTIVE, colors=4)
         img.save(".\\imgToBMP\\output.bmp")
 
+        # Copy the image to the output folder
+        os.system("copy .\\imgToBMP\\output.bmp .\\output\\result.bmp")
+
         convert_red(f".\\imgToBMP\\output.bmp", ".\\output\\output_red.bmp")
         convert_black(f".\\imgToBMP\\output.bmp", ".\\output\\output_black.bmp")
 
@@ -57,10 +60,11 @@ def upload_image():
         # Get the paths for the preview images and Graphics.h
         preview_red = "/output/output_red.bmp"
         preview_black = "/output/output_black.bmp"
+        preview_result = "/output/result.bmp"
         graphics_h = "/downloadfile"
         
         # Pass the paths to the template
-        return render_template('index.html', preview_red=preview_red, preview_black=preview_black, graphics_h=graphics_h)
+        return render_template('index.html', preview_red=preview_red, preview_black=preview_black, preview_result=preview_result, graphics_h=graphics_h)
     
     return render_template('index.html')
 
@@ -77,6 +81,10 @@ def preview_red():
 @app.route('/output/output_black.bmp')
 def preview_black():
     return send_file('./output/output_black.bmp')
+
+@app.route('/output/result.bmp')
+def result():
+    return send_file('./output/result.bmp')
 
 if __name__ == '__main__':
     app.run()
