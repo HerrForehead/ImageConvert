@@ -55,8 +55,11 @@ def upload_image():
 
         os.remove(".\\imgToBMP\\output.bmp")
 
-        os.system(f"powershell python.exe ./bmp2array.py ./output/output_black.bmp, ./output/output_red.bmp > ./output/Graphics.h")
+        #os.system(f"powershell python.exe ./bmp2array.py ./output/output_black.bmp, ./output/output_red.bmp > ./output/Graphics.h")
         
+        # generate the Graphics.h file with img2hex.py
+        os.system("python.exe ./img2hex.py")
+
         # Get the paths for the preview images and Graphics.h
         preview_red = "/output/output_red.bmp"
         preview_black = "/output/output_black.bmp"
@@ -67,6 +70,10 @@ def upload_image():
         return render_template('index.html', preview_red=preview_red, preview_black=preview_black, preview_result=preview_result, graphics_h=graphics_h)
     
     return render_template('index.html')
+
+@app.route('/img2hex.html', methods=['GET', 'POST'])
+def convert_to_hex():
+    return render_template('img2hex.html')
 
 # Sending the file to the user
 @app.route('/downloadfile')
