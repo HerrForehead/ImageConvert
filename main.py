@@ -14,6 +14,7 @@ def upload_image():
         if 'file' not in request.files:
             return redirect(request.url)
         
+        # Acccept file and save it to the inputImage folder
         file = request.files['file']
 
         if file.filename == '':
@@ -26,13 +27,17 @@ def upload_image():
         filename = 'input' + os.path.splitext(file.filename)[1]
         file.save(os.path.join('inputImage', filename))
 
+        # Resize the image to the necessary size
         process_image(f"./inputImage/input"+ os.path.splitext(file.filename)[1])
 
+        # Remove the temporary file
         os.remove(f"./inputImage/input"+ os.path.splitext(file.filename)[1])
 
+        # Convert the image to a 3-color BMP
         commandimg = f"convert .\\inputImage\\processed_image.png -dither FloydSteinberg -define dither:diffusion-amount=85% -remap eink-3color.png -depth 4 BMP3:.\imgToBMP\output.bmp"
         os.system(commandimg)
 
+        # Remove the temporary file
         os.remove(f".\\inputImage\\processed_image.png")
 
         img = Image.open(".\\imgToBMP\\output.bmp")
@@ -42,9 +47,11 @@ def upload_image():
         # Copy the image to the output folder
         os.system("copy .\\imgToBMP\\output.bmp .\\output\\result.bmp")
 
+        # Separate the image into red and black layers
         convert_red(f".\\imgToBMP\\output.bmp", ".\\output\\output_red.bmp")
         convert_black(f".\\imgToBMP\\output.bmp", ".\\output\\output_black.bmp")
 
+        # Convert the images to 4-bit depth
         img = Image.open(".\\output\\output_red.bmp")
         img = img.convert("P", palette=Image.ADAPTIVE, colors=4)
         img.save(".\\output\\output_red.bmp")
@@ -53,9 +60,8 @@ def upload_image():
         img = img.convert("P", palette=Image.ADAPTIVE, colors=4)
         img.save(".\\output\\output_black.bmp")
 
+        # Remove the temporary file
         os.remove(".\\imgToBMP\\output.bmp")
-
-        #os.system(f"powershell python.exe ./bmp2array.py ./output/output_black.bmp, ./output/output_red.bmp > ./output/Graphics.h")
         
         # generate the Graphics.h file with img2hex.py
         os.system("python.exe ./img2hex.py")
@@ -71,6 +77,7 @@ def upload_image():
     
     return render_template('index.html')
 
+# Convert the image to hex
 @app.route('/img2hex.html', methods=['GET', 'POST'])
 def convert_to_hex():
     return render_template('img2hex.html')

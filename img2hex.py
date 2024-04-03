@@ -6,7 +6,7 @@ import os
 import time
 
 # Start Chrome WebDriver
-driver = webdriver.Edge(executable_path="msedgedriver.exe")
+driver = webdriver.Edge(executable_path="bin/msedgedriver.exe")
 
 # Open the HTML file
 driver.get("http://127.0.0.1:5000/img2hex.html")
