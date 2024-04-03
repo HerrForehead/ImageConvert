@@ -55,7 +55,5 @@ if os.path.exists("output/Graphics.h"):
 with open("output/Graphics.h", "w") as file:
     file.write(output.get_attribute("value"))
 
-print("3")
-
 # Close the browser
 driver.quit()
